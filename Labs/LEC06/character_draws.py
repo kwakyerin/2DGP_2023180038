@@ -61,11 +61,14 @@ def move_rectangle():
 
 def move_triangle():
     print("triangle")
+    draw_triangle_one()
+    draw_triangle_two()
+    draw_triangle_three()
     pass
 
 while True:
     #move_circle()
-    move_rectangle()
+    #move_rectangle()
     move_triangle()
 pass
 
