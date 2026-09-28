@@ -60,6 +60,7 @@ def move_rectangle():
     pass
 
 def draw_triangle_one():
+    print('one')
     pass
 
 def draw_triangle_two():
