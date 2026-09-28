@@ -7,13 +7,14 @@ from pico2d import *
 open_canvas(800,600)
 character = load_image('character.png')
 
+#캐릭터 그리기
 def draw_character(x, y):
     clear_canvas()
     character.draw(x,y)
     update_canvas()
     delay(0.01)
 
-    
+#원 움직이기    
 def move_circle():
     print("circle")
     # 캐릭터 이미지 표시
@@ -74,7 +75,13 @@ def draw_triangle_two():
     x1,y1=400,500
 
     n=50
-    
+
+    for step in range(n + 1):
+        t = step / n
+        x = x0 + (x1 - x0) * t
+        y = y0 + (y1 - y0) * t
+
+        draw_character(x, y)
     pass
 
 #왼쪽변(c에서 a)
