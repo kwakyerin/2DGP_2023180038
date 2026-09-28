@@ -28,8 +28,8 @@ def move_circle():
 
 def draw_top():
     print('top')
-    for x in range(750, 49, -5):
-        draw_character(x, 550)
+    for x in range(750,49,-5):
+        draw_character(x,550)
     pass
 
 def draw_left():
@@ -46,6 +46,8 @@ def draw_bottom():
 
 def draw_right():
     print('right')
+    for y in range(50,551,5):
+        draw_character(750,y)
     pass
 
 #고수는 함수 호출을 먼저 한다
