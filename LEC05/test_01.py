@@ -40,3 +40,5 @@ while True:
 
         y -= 2
         delay(0.01)
+
+close_canvas()
