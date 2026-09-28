@@ -21,13 +21,18 @@ def move_circle():
 
         draw_character(x, y)
 
+
 def move_rectangle():
     print('rectangle')
+
+    for x in range(750, 49, -5):
+        draw_character(x, 550)  
+
 
 def move_triangle():
     print('triangle')
 
 while True:
-    move_circle()
-    # move_rectangle()
+    #move_circle()
+    move_rectangle()
     # move_triangle()
