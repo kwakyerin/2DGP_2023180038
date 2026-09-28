@@ -59,17 +59,19 @@ def move_rectangle():
     draw_right()
     pass
 
-#아래변
+#아래변(a에서 b)
 def draw_triangle_one():
     print('one')
+    for x in range(100,701,5):
+        draw_character(x,100)
     pass
 
-#오른쪽변
+#오른쪽변(b에서 c)
 def draw_triangle_two():
     print('two')
     pass
 
-#왼쪽변
+#왼쪽변(c에서 a)
 def draw_triangle_three():
     print('three')
     pass
