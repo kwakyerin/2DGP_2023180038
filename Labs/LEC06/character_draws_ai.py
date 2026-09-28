@@ -29,7 +29,10 @@ def move_rectangle():
         draw_character(x, 550)
 
     for y in range(550, 49, -5):
-        draw_character(50, y)  
+        draw_character(50, y)
+
+    for x in range(50, 751, 5):
+        draw_character(x, 50)      
 
 
 def move_triangle():
