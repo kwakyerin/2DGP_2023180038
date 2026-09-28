@@ -117,6 +117,6 @@ def move_triangle():
 #세 운동 모두 반복(무한사이클)
 while True:
     move_circle()
-    #move_rectangle()
+    move_rectangle()
     move_triangle()
 pass
