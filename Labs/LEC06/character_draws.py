@@ -28,8 +28,8 @@ def move_circle():
 
 def draw_top():
     print('top')
-    for x in range(50,750,5):
-      draw_character(x,550)
+    for x in range(750, 49, -5):
+        draw_character(x, 550)
     pass
 
 def draw_left():
@@ -40,7 +40,7 @@ def draw_left():
 
 def draw_bottom():
     print('bottom')
-    for x in range(50,750,5):
+    for x in range(50,751,5):
         draw_character(x,50)
     pass
 
