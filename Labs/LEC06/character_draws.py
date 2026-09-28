@@ -59,6 +59,9 @@ def move_rectangle():
     draw_right()
     pass
 
+def draw_triangle_one():
+    pass
+
 def move_triangle():
     print("triangle")
     draw_triangle_one()
