@@ -79,7 +79,7 @@ def draw_triangle_two():
     x0,y0=700,100
     x1,y1=400,500
 
-    n=50
+    n=100
 
     for step in range(n + 1):
         t = step / n
@@ -96,7 +96,7 @@ def draw_triangle_three():
     x0,y0=400,500
     x1,y1=100,100
 
-    n=50
+    n=100
 
     for step in range(n + 1):
         t = step / n
