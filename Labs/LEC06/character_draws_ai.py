@@ -1,8 +1,13 @@
+#ai가 짠 코드와 차이점
+#함수 하나에 한꺼번에 모든 변의 움직임을 구현했다
+#확실히 내가 구현한 코드보다 짧아져서 한 눈에 보기는 좋다
+
 import math
 from pico2d import *
 
 open_canvas(800, 600)
 character = load_image('character.png')
+
 
 def draw_character(x, y):
     clear_canvas()
@@ -10,9 +15,8 @@ def draw_character(x, y):
     update_canvas()
     delay(0.01)
 
-def move_circle():
-    print('circle')
 
+def move_circle():
     for degree in range(360):
         theta = math.radians(degree)
 
@@ -23,8 +27,6 @@ def move_circle():
 
 
 def move_rectangle():
-    print('rectangle')
-
     for x in range(750, 49, -5):
         draw_character(x, 550)
 
@@ -35,7 +37,7 @@ def move_rectangle():
         draw_character(x, 50)
 
     for y in range(50, 551, 5):
-        draw_character(750, y)      
+        draw_character(750, y)
 
 
 def move_triangle():
@@ -66,7 +68,8 @@ def move_triangle():
 
         draw_character(x, y)
 
+
 while True:
-    #move_circle()
-    #move_rectangle()
+    move_circle()
+    move_rectangle()
     move_triangle()
