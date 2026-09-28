@@ -87,6 +87,13 @@ def draw_triangle_two():
 #왼쪽변(c에서 a)
 def draw_triangle_three():
     print('three')
+
+    x0,y0=400,500
+    x1,y1=100,700
+
+    n=50
+
+
     pass
 
 def move_triangle():
