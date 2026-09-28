@@ -89,7 +89,7 @@ def draw_triangle_three():
     print('three')
 
     x0,y0=400,500
-    x1,y1=100,700
+    x1,y1=100,100
 
     n=50
 
