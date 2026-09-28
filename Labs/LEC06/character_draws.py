@@ -64,6 +64,7 @@ def draw_triangle_one():
     pass
 
 def draw_triangle_two():
+    print('two')
     pass
 
 def draw_triangle_three():
