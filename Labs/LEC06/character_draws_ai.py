@@ -39,9 +39,34 @@ def move_rectangle():
 
 
 def move_triangle():
-    print('triangle')
+    for x in range(100, 701, 5):
+        draw_character(x, 100)
+
+    x0, y0 = 700, 100
+    x1, y1 = 400, 500
+
+    n = 100
+
+    for step in range(n + 1):
+        t = step / n
+
+        x = x0 + (x1 - x0) * t
+        y = y0 + (y1 - y0) * t
+
+        draw_character(x, y)
+
+    x0, y0 = 400, 500
+    x1, y1 = 100, 100
+
+    for step in range(n + 1):
+        t = step / n
+
+        x = x0 + (x1 - x0) * t
+        y = y0 + (y1 - y0) * t
+
+        draw_character(x, y)
 
 while True:
     #move_circle()
-    move_rectangle()
-    # move_triangle()
+    #move_rectangle()
+    move_triangle()
