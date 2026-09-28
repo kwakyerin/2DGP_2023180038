@@ -69,6 +69,12 @@ def draw_triangle_one():
 #오른쪽변(b에서 c)
 def draw_triangle_two():
     print('two')
+
+    x0,y0=700,100
+    x1,y1=400,500
+
+    n=50
+    
     pass
 
 #왼쪽변(c에서 a)
