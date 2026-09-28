@@ -62,13 +62,13 @@ def move_rectangle():
 
 #아래변(a에서 b)
 def draw_triangle_one():
-    print('triangle_one')
+    print('triangle a->b')
     for x in range(100,701,5):
         draw_character(x,100)
 
 #오른쪽변(b에서 c)
 def draw_triangle_two():
-    print('triangle_two')
+    print('triangle b->c')
 
     x0,y0=700,100
     x1,y1=400,500
@@ -84,7 +84,7 @@ def draw_triangle_two():
 
 #왼쪽변(c에서 a)
 def draw_triangle_three():
-    print('triangle_three')
+    print('triangle c->a')
 
     x0,y0=400,500
     x1,y1=100,100
