@@ -59,15 +59,19 @@ def move_rectangle():
     draw_right()
     pass
 
+#아래변
 def draw_triangle_one():
     print('one')
     pass
 
+#오른쪽변
 def draw_triangle_two():
     print('two')
     pass
 
+#왼쪽변
 def draw_triangle_three():
+    print('three')
     pass
 
 def move_triangle():
