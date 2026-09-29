@@ -70,14 +70,14 @@ def jump_animation():
 
 
 while True:
-    #walk_animation()
-    #delay(1)
+    walk_animation()
+    delay(1)
 
-    #run_animation()
-    #delay(1)
+    run_animation()
+    delay(1)
 
     jump_animation()
-    #delay(1)
+    delay(1)
 
-    #attack_animation()
-    #delay(1)
+    attack_animation()
+    delay(1)
