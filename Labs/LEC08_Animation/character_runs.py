@@ -12,7 +12,7 @@ def walk_animation():
     print('걷기')
     global frame
     
-    character.clip_draw(frame*128,1024,128,128,x,100)
+    character.clip_draw(frame*128,1024,128,128,x,100,170,170)
     frame=(frame+1)%8
     pass
 
