@@ -12,13 +12,16 @@ def walk_animation():
     print('걷기')
     global frame
 
-    clear_canvas()
-    
-    character.clip_draw(frame*128,1024,128,128,400,300,170,170)
-    frame=(frame+1)%8
+for r in range(5):
+    for frame in range(8):
 
-    update_canvas()
-    delay(0.05)
+      clear_canvas()
+    
+      character.clip_draw(frame*128,1024,128,128,400,300,170,170)
+      frame=(frame+1)%8
+
+      update_canvas()
+      delay(0.05)
     pass
 
 #달리기 
@@ -26,13 +29,16 @@ def run_animation():
     print('달리기')
     global frame
 
-    clear_canvas()
-    
-    character.clip_draw(frame*128,896,128,128,400,300,170,170)    
-    frame=(frame+1)%8
+for r in range(5):
+    for frame in range(8):
 
-    update_canvas()
-    delay(0.05)
+      clear_canvas()
+    
+      character.clip_draw(frame*128,1024,128,128,400,300,170,170)
+      frame=(frame+1)%8
+
+      update_canvas()
+      delay(0.05)
     pass
 
 #공격
@@ -40,13 +46,16 @@ def attack_animation():
     print('공격')
     global frame
 
-    clear_canvas()
+for r in range(5):
+    for frame in range(8):
 
-    character.clip_draw(frame*128,512,128,128,400,300,170,170)
-    frame=(frame+1)%8
+      clear_canvas()
+    
+      character.clip_draw(frame*128,1024,128,128,400,300,170,170)
+      frame=(frame+1)%8
 
-    update_canvas()
-    delay(0.05)
+      update_canvas()
+      delay(0.05)
     pass
 
 #점프
@@ -54,13 +63,16 @@ def jump_animation():
     print('점프')
     global frame
 
-    clear_canvas()
+for r in range(5):
+    for frame in range(8):
 
-    character.clip_draw(frame*128,768,128,128,400,300,170,170)
-    frame=(frame+1)%8
+      clear_canvas()
+    
+      character.clip_draw(frame*128,1024,128,128,400,300,170,170)
+      frame=(frame+1)%8
 
-    update_canvas()
-    delay(0.05)
+      update_canvas()
+      delay(0.05)
     pass
 
 
