@@ -21,7 +21,7 @@ def run_animation():
     print('달리기')
     global frame
     
-    character.clip_draw(frame*128,896,128,128,x,100)    
+    character.clip_draw(frame*128,896,128,128,x,100,170,170)    
     frame=(frame+1)%8
     pass
 
@@ -47,8 +47,8 @@ def jump_animation():
 for x in range(0, 800, 5):
     clear_canvas()
 
-    walk_animation()
-    #run_animation()
+    #walk_animation()
+    run_animation()
     #attack_animation()
     #jump_animation()
 
