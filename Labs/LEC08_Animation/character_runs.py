@@ -25,22 +25,29 @@ def run_animation():
     frame=(frame+1)%8
     pass
 
+
+def attack_animation():
+    print('공격')
+    global frame
+
+    character.clip_draw(frame*128,512,128,128,x,100)
+    frame=(frame+1)%8
+    pass
+
+
 def jump_animation():
     print('점프')
     pass
 
-def attack_animation():
-    print('공격')
-    pass
 
 for x in range(0, 800, 5):
     clear_canvas()
     grass.draw(400, 30)
 
     #walk_animation()
-    run_animation()
+    #run_animation()
+    attack_animation()
     #jump_animation()
-    #attack_animation()
 
     update_canvas()
     delay(0.05)
