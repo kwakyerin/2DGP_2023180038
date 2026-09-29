@@ -39,7 +39,7 @@ def jump_animation():
     print('점프')
     global frame
 
-    character.clip_draw(frame*128,768,128,128,x,100)
+    character.clip_draw(frame*128,768,128,128,x,100.170,170)
     frame=(frame+1)%8
     pass
 
@@ -49,8 +49,8 @@ for x in range(0, 800, 5):
 
     #walk_animation()
     #run_animation()
-    attack_animation()
-    #jump_animation()
+    #attack_animation()
+    jump_animation()
 
     update_canvas()
     delay(0.05)
