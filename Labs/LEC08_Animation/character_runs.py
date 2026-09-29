@@ -10,6 +10,10 @@ frame=0
 #걷기 함수 추가
 def walk_animation():
     print('걷기')
+
+    global frame
+    character.clip_draw(frame*128,1024,128,128,x,100)
+    frame=(frame+1)%8
     pass
 
 def run_animation():
@@ -29,11 +33,12 @@ for x in range(0, 800, 5):
     grass.draw(400, 30)
 
     walk_animation()
-    run_animation()
-    jump_animation()
-    attack_animation()
+    #run_animation()
+    #jump_animation()
+    #attack_animation()
 
     update_canvas()
+    delay(0.05)
     
 close_canvas()
 
