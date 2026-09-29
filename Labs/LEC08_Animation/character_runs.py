@@ -40,7 +40,9 @@ def attack_animation():
     print('공격')
     global frame
 
-    character.clip_draw(frame*128,512,128,128,x,100,170,170)
+    clear_canvas()
+
+    character.clip_draw(frame*128,512,128,128,400,300,170,170)
     frame=(frame+1)%8
 
     update_canvas()
@@ -64,13 +66,13 @@ while True:
     #walk_animation()
     #delay(1)
 
-    run_animation()
+    #run_animation()
     #delay(1)
 
     #jump_animation()
     #delay(1)
 
-    #attack_animation()
+    attack_animation()
     #delay(1)
     
 close_canvas()
