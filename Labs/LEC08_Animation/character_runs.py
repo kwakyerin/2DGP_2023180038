@@ -7,17 +7,22 @@ character = load_image('SamuraiSheet.png')
 
 frame=0
 
-#걷기 함수 추가
+#걷기
 def walk_animation():
     print('걷기')
-
     global frame
+    
     character.clip_draw(frame*128,1024,128,128,x,100)
     frame=(frame+1)%8
     pass
 
+#달리기 
 def run_animation():
     print('달리기')
+    global frame
+    
+    character.clip_draw(frame*128,896,128,128,x,100)    
+    frame=(frame+1)%8
     pass
 
 def jump_animation():
@@ -32,8 +37,8 @@ for x in range(0, 800, 5):
     clear_canvas()
     grass.draw(400, 30)
 
-    walk_animation()
-    #run_animation()
+    #walk_animation()
+    run_animation()
     #jump_animation()
     #attack_animation()
 
