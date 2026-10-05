@@ -158,6 +158,7 @@ def main():
             clear_canvas()
             draw_animation_frame(sprite_sheet, animation, state.frame_index)
             update_canvas()
+            time.sleep(0.001)
     finally:
         close_canvas()
 
