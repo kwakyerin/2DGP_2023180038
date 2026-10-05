@@ -36,6 +36,16 @@ class Animation:
     frame_count: int
 
 
+@dataclass
+class PlaybackState:
+    animation_index: int = 0
+    frame_index: int = 0
+    repetition_count: int = 0
+    frame_elapsed: float = 0.0
+    gap_elapsed: float = 0.0
+    waiting_for_next: bool = False
+
+
 ANIMATIONS = (
     Animation("동작 01", 36, 30, 44, 30, 10),
     Animation("동작 02", 77, 30, 42, 30, 13),
@@ -50,31 +60,50 @@ ANIMATIONS = (
 )
 
 
+def advance_playback(state, delta_time):
+    if state.waiting_for_next:
+        state.gap_elapsed += delta_time
+        if state.gap_elapsed >= ANIMATION_GAP:
+            state.waiting_for_next = False
+            state.animation_index = (state.animation_index + 1) % len(ANIMATIONS)
+            state.frame_index = 0
+            state.frame_elapsed = 0.0
+        return
+
+    state.frame_elapsed += delta_time
+    animation = ANIMATIONS[state.animation_index]
+    if state.frame_elapsed < FRAME_DURATION:
+        return
+
+    state.frame_elapsed %= FRAME_DURATION
+    state.frame_index += 1
+    if state.frame_index < animation.frame_count:
+        return
+
+    state.repetition_count += 1
+    if state.repetition_count < REPEATS_PER_ANIMATION:
+        state.frame_index = 0
+        return
+
+    state.repetition_count = 0
+    state.waiting_for_next = True
+    state.gap_elapsed = 0.0
+    state.frame_index = animation.frame_count - 1
+
+
 def main():
     open_canvas(WINDOW_WIDTH, WINDOW_HEIGHT)
     try:
         sprite_sheet = load_image(str(SPRITE_PATH))
         running = True
-        animation_index = 0
-        frame_index = 0
-        repetition_count = 0
-        frame_elapsed = 0.0
-        gap_elapsed = 0.0
-        waiting_for_next = False
+        state = PlaybackState()
         previous_time = time.monotonic()
 
         while running:
             current_time = time.monotonic()
             delta_time = current_time - previous_time
-            frame_elapsed += delta_time
             previous_time = current_time
-            if waiting_for_next:
-                gap_elapsed += delta_time
-                if gap_elapsed >= ANIMATION_GAP:
-                    waiting_for_next = False
-                    animation_index = (animation_index + 1) % len(ANIMATIONS)
-                    frame_index = 0
-                    frame_elapsed = 0.0
+            advance_playback(state, delta_time)
 
             for event in get_events():
                 if event.type == SDL_QUIT or (
@@ -82,21 +111,7 @@ def main():
                 ):
                     running = False
 
-            animation = ANIMATIONS[animation_index]
-            if not waiting_for_next and frame_elapsed >= FRAME_DURATION:
-                frame_index += 1
-                if frame_index >= animation.frame_count:
-                    repetition_count += 1
-                    if repetition_count >= REPEATS_PER_ANIMATION:
-                        repetition_count = 0
-                        waiting_for_next = True
-                        gap_elapsed = 0.0
-                        frame_index = animation.frame_count - 1
-                    else:
-                        frame_index = 0
-                frame_elapsed %= FRAME_DURATION
-
-            animation = ANIMATIONS[animation_index]
+            animation = ANIMATIONS[state.animation_index]
             frame_bottom = SPRITE_HEIGHT - animation.top - animation.frame_height
             clear_canvas()
             scale = min(
@@ -105,7 +120,7 @@ def main():
                 WINDOW_HEIGHT * 0.8 / animation.frame_height,
             )
             sprite_sheet.clip_draw(
-                frame_index * animation.frame_stride,
+                state.frame_index * animation.frame_stride,
                 frame_bottom,
                 animation.frame_width,
                 animation.frame_height,
