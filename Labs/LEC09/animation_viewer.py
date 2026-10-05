@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from pathlib import Path
 import time
+from typing import Tuple
 
 from pico2d import (
 	SDL_KEYDOWN,
@@ -25,13 +26,17 @@ ANIMATION_GAP = 1.0
 
 
 @dataclass(frozen=True)
+class SpriteFrame:
+	left: int
+	top: int
+	width: int
+	height: int
+
+
+@dataclass(frozen=True)
 class Animation:
 	name: str
-	top: int
-	frame_width: int
-	frame_height: int
-	frame_stride: int
-	frame_count: int
+	frames: Tuple[SpriteFrame, ...]
 	movement_speed: float = 0.0
 
 
@@ -48,24 +53,112 @@ class PlaybackState:
 
 
 ANIMATIONS = (
-	Animation("달리기 01", 36, 30, 44, 30, 10, 180.0),
-	Animation("달리기 02", 77, 30, 42, 30, 13, 220.0),
-	Animation("전진 동작", 120, 47, 44, 47, 6, 140.0),
-	Animation("동작 04", 165, 38, 42, 38, 8),
-	Animation("동작 05", 204, 34, 32, 34, 6),
-	Animation("동작 06", 236, 36, 39, 36, 6),
-	Animation("동작 07", 281, 42, 38, 42, 6),
-	Animation("동작 08", 325, 36, 46, 36, 8),
-	Animation("동작 09", 376, 36, 42, 36, 8),
-	Animation("동작 10", 424, 38, 44, 38, 4),
+	Animation("달리기 01", (
+		SpriteFrame(1, 39, 29, 39),
+		SpriteFrame(31, 40, 26, 38),
+		SpriteFrame(58, 39, 28, 39),
+		SpriteFrame(86, 40, 30, 38),
+		SpriteFrame(118, 40, 30, 38),
+		SpriteFrame(150, 40, 30, 38),
+		SpriteFrame(182, 40, 29, 38),
+		SpriteFrame(211, 39, 29, 38),
+		SpriteFrame(240, 39, 29, 38),
+		SpriteFrame(270, 45, 24, 32),
+		SpriteFrame(302, 51, 29, 26),
+	), 180.0),
+	Animation("달리기 02", (
+		SpriteFrame(8, 80, 26, 37),
+		SpriteFrame(37, 80, 27, 37),
+		SpriteFrame(65, 80, 31, 38),
+		SpriteFrame(97, 80, 37, 37),
+		SpriteFrame(135, 80, 32, 35),
+		SpriteFrame(170, 79, 32, 38),
+		SpriteFrame(206, 79, 26, 38),
+		SpriteFrame(238, 80, 24, 37),
+		SpriteFrame(263, 80, 30, 37),
+		SpriteFrame(295, 80, 36, 37),
+		SpriteFrame(334, 80, 32, 36),
+		SpriteFrame(370, 79, 29, 38),
+	), 220.0),
+	Animation("전진 동작", (
+		SpriteFrame(1, 124, 33, 40),
+		SpriteFrame(39, 124, 35, 39),
+		SpriteFrame(89, 125, 35, 38),
+		SpriteFrame(130, 122, 34, 41),
+		SpriteFrame(181, 122, 34, 41),
+		SpriteFrame(228, 122, 33, 40),
+	), 140.0),
+	Animation("동작 04", (
+		SpriteFrame(1, 169, 29, 30),
+		SpriteFrame(35, 168, 29, 30),
+		SpriteFrame(67, 169, 30, 29),
+		SpriteFrame(98, 169, 31, 29),
+		SpriteFrame(131, 168, 29, 30),
+		SpriteFrame(162, 168, 29, 31),
+		SpriteFrame(193, 170, 30, 29),
+		SpriteFrame(230, 170, 31, 29),
+		SpriteFrame(268, 170, 30, 30),
+	)),
+	Animation("동작 05", (
+		SpriteFrame(1, 206, 30, 27),
+		SpriteFrame(36, 206, 29, 27),
+		SpriteFrame(70, 206, 29, 27),
+		SpriteFrame(105, 206, 29, 27),
+		SpriteFrame(139, 206, 29, 27),
+		SpriteFrame(174, 206, 29, 27),
+	)),
+	Animation("동작 06", (
+		SpriteFrame(1, 239, 29, 35),
+		SpriteFrame(36, 239, 30, 35),
+		SpriteFrame(74, 239, 31, 35),
+		SpriteFrame(111, 238, 31, 36),
+		SpriteFrame(149, 239, 30, 35),
+		SpriteFrame(186, 238, 31, 36),
+	)),
+	Animation("동작 07", (
+		SpriteFrame(1, 283, 29, 35),
+		SpriteFrame(36, 283, 30, 35),
+		SpriteFrame(72, 286, 39, 31),
+		SpriteFrame(123, 285, 39, 32),
+		SpriteFrame(172, 286, 39, 31),
+		SpriteFrame(218, 285, 38, 32),
+	)),
+	Animation("동작 08", (
+		SpriteFrame(1, 327, 24, 44),
+		SpriteFrame(31, 327, 29, 44),
+		SpriteFrame(65, 327, 20, 44),
+		SpriteFrame(90, 327, 25, 43),
+		SpriteFrame(119, 327, 25, 43),
+		SpriteFrame(149, 327, 20, 44),
+		SpriteFrame(184, 341, 40, 28),
+		SpriteFrame(232, 341, 39, 27),
+	)),
+	Animation("동작 09", (
+		SpriteFrame(1, 379, 27, 38),
+		SpriteFrame(31, 379, 31, 36),
+		SpriteFrame(64, 379, 31, 36),
+		SpriteFrame(99, 378, 33, 37),
+		SpriteFrame(136, 379, 32, 36),
+		SpriteFrame(176, 379, 33, 36),
+		SpriteFrame(217, 379, 33, 36),
+		SpriteFrame(254, 378, 33, 36),
+	)),
+	Animation("동작 10", (
+		SpriteFrame(6, 429, 34, 40),
+		SpriteFrame(49, 427, 34, 42),
+		SpriteFrame(96, 427, 23, 39),
+		SpriteFrame(125, 427, 23, 39),
+	)),
 )
 
 
 def frame_scale(animation: Animation) -> float:
+	frame_width = max(frame.width for frame in animation.frames)
+	frame_height = max(frame.height for frame in animation.frames)
 	return min(
 		FRAME_SCALE,
-		WINDOW_WIDTH * 0.8 / animation.frame_width,
-		WINDOW_HEIGHT * 0.8 / animation.frame_height,
+		WINDOW_WIDTH * 0.8 / frame_width,
+		WINDOW_HEIGHT * 0.8 / frame_height,
 	)
 
 
@@ -77,7 +170,8 @@ def advance_position(
 	if animation.movement_speed == 0 or delta_time <= 0:
 		return
 
-	half_width = animation.frame_width * frame_scale(animation) / 2
+	frame_width = max(frame.width for frame in animation.frames)
+	half_width = frame_width * frame_scale(animation) / 2
 	left_edge = half_width
 	right_edge = WINDOW_WIDTH - half_width
 	next_position = (
@@ -112,7 +206,7 @@ def advance_playback(state: PlaybackState, delta_time: float) -> None:
 	while state.frame_elapsed + 1e-9 >= FRAME_DURATION:
 		state.frame_elapsed = max(0.0, state.frame_elapsed - FRAME_DURATION)
 		state.frame_index += 1
-		if state.frame_index < animation.frame_count:
+		if state.frame_index < len(animation.frames):
 			continue
 
 		state.repetition_count += 1
@@ -123,7 +217,7 @@ def advance_playback(state: PlaybackState, delta_time: float) -> None:
 		state.repetition_count = 0
 		state.waiting_for_next = True
 		state.gap_elapsed = 0.0
-		state.frame_index = animation.frame_count - 1
+		state.frame_index = len(animation.frames) - 1
 		return
 
 
@@ -134,19 +228,20 @@ def draw_animation_frame(
 	position_x: float,
 	direction: int,
 ) -> None:
-	frame_bottom = sprite_sheet.h - animation.top - animation.frame_height
+	frame = animation.frames[frame_index]
+	frame_bottom = sprite_sheet.h - frame.top - frame.height
 	scale = frame_scale(animation)
 	sprite_sheet.clip_composite_draw(
-		frame_index * animation.frame_stride,
+		frame.left,
 		frame_bottom,
-		animation.frame_width,
-		animation.frame_height,
+		frame.width,
+		frame.height,
 		0,
 		"h" if animation.movement_speed and direction < 0 else "",
 		position_x,
 		WINDOW_HEIGHT // 2,
-		round(animation.frame_width * scale),
-		round(animation.frame_height * scale),
+		round(frame.width * scale),
+		round(frame.height * scale),
 	)
 
 
@@ -156,20 +251,18 @@ def validate_animations(
 	sheet_height=525,
 ) -> None:
 	for animation in animations:
-		last_frame_right = (
-			(animation.frame_count - 1) * animation.frame_stride
-			+ animation.frame_width
-		)
-		if (
-			animation.frame_count < 1
-			or animation.frame_width < 1
-			or animation.frame_height < 1
-			or animation.frame_stride < animation.frame_width
-			or animation.top < 0
-			or last_frame_right > sheet_width
-			or animation.top + animation.frame_height > sheet_height
-		):
-			raise ValueError(f"잘못된 스프라이트 프레임 설정: {animation.name}")
+		if not animation.frames:
+			raise ValueError(f"프레임이 없는 애니메이션: {animation.name}")
+		for frame in animation.frames:
+			if (
+				frame.left < 0
+				or frame.top < 0
+				or frame.width < 1
+				or frame.height < 1
+				or frame.left + frame.width > sheet_width
+				or frame.top + frame.height > sheet_height
+			):
+				raise ValueError(f"잘못된 스프라이트 프레임 설정: {animation.name}")
 
 
 def main() -> None:
