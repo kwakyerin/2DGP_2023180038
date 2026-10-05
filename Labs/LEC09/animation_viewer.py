@@ -72,23 +72,22 @@ def advance_playback(state, delta_time):
 
     state.frame_elapsed += delta_time
     animation = ANIMATIONS[state.animation_index]
-    if state.frame_elapsed < FRAME_DURATION:
-        return
+    while state.frame_elapsed + 1e-9 >= FRAME_DURATION:
+        state.frame_elapsed = max(0.0, state.frame_elapsed - FRAME_DURATION)
+        state.frame_index += 1
+        if state.frame_index < animation.frame_count:
+            continue
 
-    state.frame_elapsed %= FRAME_DURATION
-    state.frame_index += 1
-    if state.frame_index < animation.frame_count:
-        return
+        state.repetition_count += 1
+        if state.repetition_count < REPEATS_PER_ANIMATION:
+            state.frame_index = 0
+            continue
 
-    state.repetition_count += 1
-    if state.repetition_count < REPEATS_PER_ANIMATION:
-        state.frame_index = 0
+        state.repetition_count = 0
+        state.waiting_for_next = True
+        state.gap_elapsed = 0.0
+        state.frame_index = animation.frame_count - 1
         return
-
-    state.repetition_count = 0
-    state.waiting_for_next = True
-    state.gap_elapsed = 0.0
-    state.frame_index = animation.frame_count - 1
 
 
 def main():
