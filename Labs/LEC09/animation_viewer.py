@@ -91,7 +91,7 @@ def advance_playback(state, delta_time):
 
 
 def draw_animation_frame(sprite_sheet, animation, frame_index):
-    frame_bottom = SPRITE_HEIGHT - animation.top - animation.frame_height
+    frame_bottom = sprite_sheet.h - animation.top - animation.frame_height
     scale = min(
         FRAME_SCALE,
         WINDOW_WIDTH * 0.8 / animation.frame_width,
@@ -109,7 +109,11 @@ def draw_animation_frame(sprite_sheet, animation, frame_index):
     )
 
 
-def validate_animations(animations=ANIMATIONS):
+def validate_animations(
+    animations=ANIMATIONS,
+    sheet_width=SPRITE_WIDTH,
+    sheet_height=SPRITE_HEIGHT,
+):
     for animation in animations:
         last_frame_right = (
             (animation.frame_count - 1) * animation.frame_stride
@@ -121,8 +125,8 @@ def validate_animations(animations=ANIMATIONS):
             or animation.frame_height < 1
             or animation.frame_stride < animation.frame_width
             or animation.top < 0
-            or last_frame_right > SPRITE_WIDTH
-            or animation.top + animation.frame_height > SPRITE_HEIGHT
+            or last_frame_right > sheet_width
+            or animation.top + animation.frame_height > sheet_height
         ):
             raise ValueError(f"잘못된 스프라이트 프레임 설정: {animation.name}")
 
@@ -131,10 +135,10 @@ def main():
     if not SPRITE_PATH.is_file():
         raise FileNotFoundError(f"스프라이트 파일을 찾을 수 없습니다: {SPRITE_PATH}")
 
-    validate_animations()
     open_canvas(WINDOW_WIDTH, WINDOW_HEIGHT)
     try:
         sprite_sheet = load_image(str(SPRITE_PATH))
+        validate_animations(sheet_width=sprite_sheet.w, sheet_height=sprite_sheet.h)
         running = True
         state = PlaybackState()
         previous_time = time.monotonic()
