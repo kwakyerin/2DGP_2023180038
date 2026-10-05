@@ -98,6 +98,11 @@ def main():
         animation = ANIMATIONS[animation_index]
         frame_bottom = SPRITE_HEIGHT - animation.top - animation.frame_height
         clear_canvas()
+        scale = min(
+            FRAME_SCALE,
+            WINDOW_WIDTH * 0.8 / animation.frame_width,
+            WINDOW_HEIGHT * 0.8 / animation.frame_height,
+        )
         sprite_sheet.clip_draw(
             frame_index * animation.frame_stride,
             frame_bottom,
@@ -105,8 +110,8 @@ def main():
             animation.frame_height,
             WINDOW_WIDTH // 2,
             WINDOW_HEIGHT // 2,
-            animation.frame_width * FRAME_SCALE,
-            animation.frame_height * FRAME_SCALE,
+            round(animation.frame_width * scale),
+            round(animation.frame_height * scale),
         )
         update_canvas()
 
