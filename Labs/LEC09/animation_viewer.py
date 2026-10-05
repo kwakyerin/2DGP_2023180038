@@ -20,7 +20,6 @@ WINDOW_HEIGHT = 800
 SPRITE_PATH = Path(__file__).resolve().with_name("sonic-sprite.png")
 SPRITE_WIDTH = 399
 SPRITE_HEIGHT = 525
-FRAME_WIDTH = 30
 FRAME_DURATION = 0.08
 FRAME_SCALE = 5
 
@@ -53,6 +52,7 @@ def main():
     open_canvas(WINDOW_WIDTH, WINDOW_HEIGHT)
     sprite_sheet = load_image(str(SPRITE_PATH))
     running = True
+    animation_index = 0
     frame_index = 0
     frame_elapsed = 0.0
     previous_time = time.monotonic()
@@ -68,11 +68,15 @@ def main():
             ):
                 running = False
 
-        animation = ANIMATIONS[0]
+        animation = ANIMATIONS[animation_index]
         if frame_elapsed >= FRAME_DURATION:
-            frame_index = (frame_index + 1) % animation.frame_count
+            frame_index += 1
+            if frame_index >= animation.frame_count:
+                animation_index = (animation_index + 1) % len(ANIMATIONS)
+                frame_index = 0
             frame_elapsed %= FRAME_DURATION
 
+        animation = ANIMATIONS[animation_index]
         frame_bottom = SPRITE_HEIGHT - animation.top - animation.frame_height
         clear_canvas()
         sprite_sheet.clip_draw(
