@@ -60,7 +60,7 @@ ANIMATIONS = (
 )
 
 
-def advance_playback(state, delta_time):
+def advance_playback(state: PlaybackState, delta_time: float) -> None:
     if state.waiting_for_next:
         state.gap_elapsed += delta_time
         if state.gap_elapsed >= ANIMATION_GAP:
@@ -90,7 +90,11 @@ def advance_playback(state, delta_time):
         return
 
 
-def draw_animation_frame(sprite_sheet, animation, frame_index):
+def draw_animation_frame(
+    sprite_sheet,
+    animation: Animation,
+    frame_index: int,
+) -> None:
     frame_bottom = sprite_sheet.h - animation.top - animation.frame_height
     scale = min(
         FRAME_SCALE,
@@ -131,7 +135,7 @@ def validate_animations(
             raise ValueError(f"잘못된 스프라이트 프레임 설정: {animation.name}")
 
 
-def main():
+def main() -> None:
     if not SPRITE_PATH.is_file():
         raise FileNotFoundError(f"스프라이트 파일을 찾을 수 없습니다: {SPRITE_PATH}")
 
