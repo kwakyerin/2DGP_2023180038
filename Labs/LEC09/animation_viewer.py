@@ -90,6 +90,25 @@ def advance_playback(state, delta_time):
         return
 
 
+def draw_animation_frame(sprite_sheet, animation, frame_index):
+    frame_bottom = SPRITE_HEIGHT - animation.top - animation.frame_height
+    scale = min(
+        FRAME_SCALE,
+        WINDOW_WIDTH * 0.8 / animation.frame_width,
+        WINDOW_HEIGHT * 0.8 / animation.frame_height,
+    )
+    sprite_sheet.clip_draw(
+        frame_index * animation.frame_stride,
+        frame_bottom,
+        animation.frame_width,
+        animation.frame_height,
+        WINDOW_WIDTH // 2,
+        WINDOW_HEIGHT // 2,
+        round(animation.frame_width * scale),
+        round(animation.frame_height * scale),
+    )
+
+
 def main():
     open_canvas(WINDOW_WIDTH, WINDOW_HEIGHT)
     try:
@@ -111,23 +130,8 @@ def main():
                     running = False
 
             animation = ANIMATIONS[state.animation_index]
-            frame_bottom = SPRITE_HEIGHT - animation.top - animation.frame_height
             clear_canvas()
-            scale = min(
-                FRAME_SCALE,
-                WINDOW_WIDTH * 0.8 / animation.frame_width,
-                WINDOW_HEIGHT * 0.8 / animation.frame_height,
-            )
-            sprite_sheet.clip_draw(
-                state.frame_index * animation.frame_stride,
-                frame_bottom,
-                animation.frame_width,
-                animation.frame_height,
-                WINDOW_WIDTH // 2,
-                WINDOW_HEIGHT // 2,
-                round(animation.frame_width * scale),
-                round(animation.frame_height * scale),
-            )
+            draw_animation_frame(sprite_sheet, animation, state.frame_index)
             update_canvas()
     finally:
         close_canvas()
