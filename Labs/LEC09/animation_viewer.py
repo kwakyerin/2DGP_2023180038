@@ -22,6 +22,7 @@ SPRITE_WIDTH = 399
 SPRITE_HEIGHT = 525
 FRAME_DURATION = 0.08
 FRAME_SCALE = 5
+REPEATS_PER_ANIMATION = 5
 
 
 @dataclass(frozen=True)
@@ -54,6 +55,7 @@ def main():
     running = True
     animation_index = 0
     frame_index = 0
+    repetition_count = 0
     frame_elapsed = 0.0
     previous_time = time.monotonic()
 
@@ -72,8 +74,11 @@ def main():
         if frame_elapsed >= FRAME_DURATION:
             frame_index += 1
             if frame_index >= animation.frame_count:
-                animation_index = (animation_index + 1) % len(ANIMATIONS)
                 frame_index = 0
+                repetition_count += 1
+                if repetition_count >= REPEATS_PER_ANIMATION:
+                    animation_index = (animation_index + 1) % len(ANIMATIONS)
+                    repetition_count = 0
             frame_elapsed %= FRAME_DURATION
 
         animation = ANIMATIONS[animation_index]
