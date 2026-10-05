@@ -52,70 +52,71 @@ ANIMATIONS = (
 
 def main():
     open_canvas(WINDOW_WIDTH, WINDOW_HEIGHT)
-    sprite_sheet = load_image(str(SPRITE_PATH))
-    running = True
-    animation_index = 0
-    frame_index = 0
-    repetition_count = 0
-    frame_elapsed = 0.0
-    gap_elapsed = 0.0
-    waiting_for_next = False
-    previous_time = time.monotonic()
+    try:
+        sprite_sheet = load_image(str(SPRITE_PATH))
+        running = True
+        animation_index = 0
+        frame_index = 0
+        repetition_count = 0
+        frame_elapsed = 0.0
+        gap_elapsed = 0.0
+        waiting_for_next = False
+        previous_time = time.monotonic()
 
-    while running:
-        current_time = time.monotonic()
-        delta_time = current_time - previous_time
-        frame_elapsed += delta_time
-        previous_time = current_time
-        if waiting_for_next:
-            gap_elapsed += delta_time
-            if gap_elapsed >= ANIMATION_GAP:
-                waiting_for_next = False
-                animation_index = (animation_index + 1) % len(ANIMATIONS)
-                frame_index = 0
-                frame_elapsed = 0.0
-
-        for event in get_events():
-            if event.type == SDL_QUIT or (
-                event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE
-            ):
-                running = False
-
-        animation = ANIMATIONS[animation_index]
-        if not waiting_for_next and frame_elapsed >= FRAME_DURATION:
-            frame_index += 1
-            if frame_index >= animation.frame_count:
-                repetition_count += 1
-                if repetition_count >= REPEATS_PER_ANIMATION:
-                    repetition_count = 0
-                    waiting_for_next = True
-                    gap_elapsed = 0.0
-                    frame_index = animation.frame_count - 1
-                else:
+        while running:
+            current_time = time.monotonic()
+            delta_time = current_time - previous_time
+            frame_elapsed += delta_time
+            previous_time = current_time
+            if waiting_for_next:
+                gap_elapsed += delta_time
+                if gap_elapsed >= ANIMATION_GAP:
+                    waiting_for_next = False
+                    animation_index = (animation_index + 1) % len(ANIMATIONS)
                     frame_index = 0
-            frame_elapsed %= FRAME_DURATION
+                    frame_elapsed = 0.0
 
-        animation = ANIMATIONS[animation_index]
-        frame_bottom = SPRITE_HEIGHT - animation.top - animation.frame_height
-        clear_canvas()
-        scale = min(
-            FRAME_SCALE,
-            WINDOW_WIDTH * 0.8 / animation.frame_width,
-            WINDOW_HEIGHT * 0.8 / animation.frame_height,
-        )
-        sprite_sheet.clip_draw(
-            frame_index * animation.frame_stride,
-            frame_bottom,
-            animation.frame_width,
-            animation.frame_height,
-            WINDOW_WIDTH // 2,
-            WINDOW_HEIGHT // 2,
-            round(animation.frame_width * scale),
-            round(animation.frame_height * scale),
-        )
-        update_canvas()
+            for event in get_events():
+                if event.type == SDL_QUIT or (
+                    event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE
+                ):
+                    running = False
 
-    close_canvas()
+            animation = ANIMATIONS[animation_index]
+            if not waiting_for_next and frame_elapsed >= FRAME_DURATION:
+                frame_index += 1
+                if frame_index >= animation.frame_count:
+                    repetition_count += 1
+                    if repetition_count >= REPEATS_PER_ANIMATION:
+                        repetition_count = 0
+                        waiting_for_next = True
+                        gap_elapsed = 0.0
+                        frame_index = animation.frame_count - 1
+                    else:
+                        frame_index = 0
+                frame_elapsed %= FRAME_DURATION
+
+            animation = ANIMATIONS[animation_index]
+            frame_bottom = SPRITE_HEIGHT - animation.top - animation.frame_height
+            clear_canvas()
+            scale = min(
+                FRAME_SCALE,
+                WINDOW_WIDTH * 0.8 / animation.frame_width,
+                WINDOW_HEIGHT * 0.8 / animation.frame_height,
+            )
+            sprite_sheet.clip_draw(
+                frame_index * animation.frame_stride,
+                frame_bottom,
+                animation.frame_width,
+                animation.frame_height,
+                WINDOW_WIDTH // 2,
+                WINDOW_HEIGHT // 2,
+                round(animation.frame_width * scale),
+                round(animation.frame_height * scale),
+            )
+            update_canvas()
+    finally:
+        close_canvas()
 
 
 if __name__ == "__main__":
