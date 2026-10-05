@@ -109,10 +109,29 @@ def draw_animation_frame(sprite_sheet, animation, frame_index):
     )
 
 
+def validate_animations(animations=ANIMATIONS):
+    for animation in animations:
+        last_frame_right = (
+            (animation.frame_count - 1) * animation.frame_stride
+            + animation.frame_width
+        )
+        if (
+            animation.frame_count < 1
+            or animation.frame_width < 1
+            or animation.frame_height < 1
+            or animation.frame_stride < animation.frame_width
+            or animation.top < 0
+            or last_frame_right > SPRITE_WIDTH
+            or animation.top + animation.frame_height > SPRITE_HEIGHT
+        ):
+            raise ValueError(f"잘못된 스프라이트 프레임 설정: {animation.name}")
+
+
 def main():
     if not SPRITE_PATH.is_file():
         raise FileNotFoundError(f"스프라이트 파일을 찾을 수 없습니다: {SPRITE_PATH}")
 
+    validate_animations()
     open_canvas(WINDOW_WIDTH, WINDOW_HEIGHT)
     try:
         sprite_sheet = load_image(str(SPRITE_PATH))
