@@ -151,6 +151,9 @@ def main():
                 ):
                     running = False
 
+            if not running:
+                break
+
             animation = ANIMATIONS[state.animation_index]
             clear_canvas()
             draw_animation_frame(sprite_sheet, animation, state.frame_index)
