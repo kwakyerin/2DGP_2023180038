@@ -1,4 +1,5 @@
 from pathlib import Path
+from dataclasses import dataclass
 import time
 
 from pico2d import (
@@ -22,7 +23,30 @@ SPRITE_HEIGHT = 525
 FRAME_WIDTH = 30
 FRAME_DURATION = 0.08
 FRAME_SCALE = 5
-ANIMATION_ROWS = ((36, 44, 10),)
+
+
+@dataclass(frozen=True)
+class Animation:
+    name: str
+    top: int
+    frame_width: int
+    frame_height: int
+    frame_stride: int
+    frame_count: int
+
+
+ANIMATIONS = (
+    Animation("동작 01", 36, 30, 44, 30, 10),
+    Animation("동작 02", 77, 30, 42, 30, 13),
+    Animation("동작 03", 120, 47, 44, 47, 6),
+    Animation("동작 04", 165, 38, 42, 38, 8),
+    Animation("동작 05", 204, 34, 32, 34, 6),
+    Animation("동작 06", 236, 36, 39, 36, 6),
+    Animation("동작 07", 281, 42, 38, 42, 6),
+    Animation("동작 08", 325, 36, 46, 36, 8),
+    Animation("동작 09", 376, 36, 42, 36, 8),
+    Animation("동작 10", 424, 38, 44, 38, 4),
+)
 
 
 def main():
@@ -44,22 +68,22 @@ def main():
             ):
                 running = False
 
+        animation = ANIMATIONS[0]
         if frame_elapsed >= FRAME_DURATION:
-            frame_index = (frame_index + 1) % ANIMATION_ROWS[0][2]
+            frame_index = (frame_index + 1) % animation.frame_count
             frame_elapsed %= FRAME_DURATION
 
-        row_top, frame_height, _ = ANIMATION_ROWS[0]
-        frame_bottom = SPRITE_HEIGHT - row_top - frame_height
+        frame_bottom = SPRITE_HEIGHT - animation.top - animation.frame_height
         clear_canvas()
         sprite_sheet.clip_draw(
-            frame_index * FRAME_WIDTH,
+            frame_index * animation.frame_stride,
             frame_bottom,
-            FRAME_WIDTH,
-            frame_height,
+            animation.frame_width,
+            animation.frame_height,
             WINDOW_WIDTH // 2,
             WINDOW_HEIGHT // 2,
-            FRAME_WIDTH * FRAME_SCALE,
-            frame_height * FRAME_SCALE,
+            animation.frame_width * FRAME_SCALE,
+            animation.frame_height * FRAME_SCALE,
         )
         update_canvas()
 
