@@ -23,6 +23,7 @@ SPRITE_HEIGHT = 525
 FRAME_DURATION = 0.08
 FRAME_SCALE = 5
 REPEATS_PER_ANIMATION = 5
+ANIMATION_GAP = 1.0
 
 
 @dataclass(frozen=True)
@@ -57,12 +58,22 @@ def main():
     frame_index = 0
     repetition_count = 0
     frame_elapsed = 0.0
+    gap_elapsed = 0.0
+    waiting_for_next = False
     previous_time = time.monotonic()
 
     while running:
         current_time = time.monotonic()
-        frame_elapsed += current_time - previous_time
+        delta_time = current_time - previous_time
+        frame_elapsed += delta_time
         previous_time = current_time
+        if waiting_for_next:
+            gap_elapsed += delta_time
+            if gap_elapsed >= ANIMATION_GAP:
+                waiting_for_next = False
+                animation_index = (animation_index + 1) % len(ANIMATIONS)
+                frame_index = 0
+                frame_elapsed = 0.0
 
         for event in get_events():
             if event.type == SDL_QUIT or (
@@ -71,14 +82,17 @@ def main():
                 running = False
 
         animation = ANIMATIONS[animation_index]
-        if frame_elapsed >= FRAME_DURATION:
+        if not waiting_for_next and frame_elapsed >= FRAME_DURATION:
             frame_index += 1
             if frame_index >= animation.frame_count:
-                frame_index = 0
                 repetition_count += 1
                 if repetition_count >= REPEATS_PER_ANIMATION:
-                    animation_index = (animation_index + 1) % len(ANIMATIONS)
                     repetition_count = 0
+                    waiting_for_next = True
+                    gap_elapsed = 0.0
+                    frame_index = animation.frame_count - 1
+                else:
+                    frame_index = 0
             frame_elapsed %= FRAME_DURATION
 
         animation = ANIMATIONS[animation_index]
