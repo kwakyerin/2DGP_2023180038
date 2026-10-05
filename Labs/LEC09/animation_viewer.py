@@ -110,6 +110,9 @@ def draw_animation_frame(sprite_sheet, animation, frame_index):
 
 
 def main():
+    if not SPRITE_PATH.is_file():
+        raise FileNotFoundError(f"스프라이트 파일을 찾을 수 없습니다: {SPRITE_PATH}")
+
     open_canvas(WINDOW_WIDTH, WINDOW_HEIGHT)
     try:
         sprite_sheet = load_image(str(SPRITE_PATH))
