@@ -1,0 +1,16 @@
+from pico2d import *
+
+open_canvas()
+TUK_GROUND = load_image('TUK_GROUND.png')
+character = load_image('animation_sheet.png')
+
+clear_canvas()
+
+TUK_GROUND.draw(400, 300)
+
+update_canvas()
+
+delay(3)
+
+
+close_canvas()
