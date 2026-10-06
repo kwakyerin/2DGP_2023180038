@@ -9,6 +9,7 @@ running = True
 x = 800 // 2
 frame = 0
 dir=0
+dir_y = 0
 
 def handle_events():
     global running,dir
@@ -51,6 +52,7 @@ while running:
     handle_events()
     frame = (frame + 1) % 8
     x+=dir*5
+    y+=dir_y * 5
     delay(0.05)
 
 close_canvas()
