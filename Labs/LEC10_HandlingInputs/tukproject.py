@@ -4,13 +4,18 @@ open_canvas()
 TUK_GROUND = load_image('TUK_GROUND.png')
 character = load_image('animation_sheet.png')
 
-clear_canvas()
+running=True
 
-TUK_GROUND.draw(400, 300)
+def handle_events():
+    pass
 
-update_canvas()
-
-delay(3)
+while running:
+    clear_canvas()
+    TUK_GROUND.draw(400, 300)
+    update_canvas()
+    handle_events()
+    delay(0.05)
+    pass
 
 
 close_canvas()
