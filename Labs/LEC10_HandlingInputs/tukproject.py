@@ -26,13 +26,21 @@ def handle_events():
                 dir+=1
             elif event.key==SDLK_LEFT:
                 dir-=1
+            elif event.key == SDLK_UP:
+                pass
+            elif event.key == SDLK_DOWN:
+                pass
             elif event.key==SDLK_ESCAPE:
                 running=False
         elif event.type==SDL_KEYUP:
             if event.key==SDLK_RIGHT:
                 dir-=1
             elif event.key==SDLK_LEFT:
-                dir+=1                  
+                dir+=1
+            elif event.key == SDLK_UP:
+                pass
+            elif event.key == SDLK_DOWN:
+                pass                      
 
 
 while running:
